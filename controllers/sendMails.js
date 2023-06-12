@@ -15,7 +15,7 @@ const sendOTP = async (email) => {
   const otp = Math.floor(Math.random() * 10000 + 1)
 
   const mailOptions = {
-    from: '"research_publication_website_PMIG👻" <pmigwebdev@gmail.com>', 
+    from: '"research_publication_website_PMIG" <pmigwebdev@gmail.com>', 
     to: email, 
     subject: 'OTP Verification', 
     text: `Your OTP for verification is: ${otp}`, 
