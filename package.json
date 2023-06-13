@@ -1,0 +1,20 @@
+{
+  "name": "research_publication_website_backend",
+  "version": "1.0.0",
+  "description": "Research Publication Website of PMIG",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Yash Kumar Dromar",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "mongoose": "^7.2.2",
+    "nodemailer": "^6.9.3",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1"
+  }
+}
