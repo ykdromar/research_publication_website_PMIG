@@ -1,5 +1,6 @@
 const express = require("express");
 const env = require("./config/env");
+const mongoose = require("./config/mongoose");
 const app = express();
 const port = env.PORT;
 

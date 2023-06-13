@@ -10,5 +10,6 @@ module.exports = {
       pass: process.env.SMTP_PASS,
     },
   },
+  DB: "PMIG-Dev",
   // Add more variables as needed
 };
