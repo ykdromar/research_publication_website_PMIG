@@ -5,14 +5,22 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+<<<<<<< HEAD
     "start": "node index.js"
+=======
+    "start": "nodemon index.js"
+>>>>>>> 9902b88df4f8a10aeb0a618525ce3064502339b9
   },
   "author": "Yash Kumar Dromar",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
+<<<<<<< HEAD
     "mongoose": "^7.2.2",
+=======
+    "mongoose": "^7.2.4",
+>>>>>>> 9902b88df4f8a10aeb0a618525ce3064502339b9
     "nodemailer": "^6.9.3",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1"
