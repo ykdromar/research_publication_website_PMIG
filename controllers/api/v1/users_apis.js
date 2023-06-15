@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const { sendOTP } = require("../config/nodemailerConfig.js");
+const { use } = require("passport");
 
 exports.createUser = async (req, res) => {
     const { username } = req.body;
@@ -46,4 +47,27 @@ exports.verifyOTP = async (req, res) => {
       console.log(error);
       res.status(500).send("Failed to verify OTP.");
     }
+  };
+
+  exports.fatchUser = async (req, res) => {
+    const { userid } = req.body;
+      if (req.isAuthenticated()) {
+        // User is logged in
+        const user = await User.findOne({ userid });
+        if(!user)
+        {
+          res.status(500).send("User not found!");
+        }
+        else{
+          const data={
+            "name": user.name,
+            "username": user.username,
+            "about":user.about
+          }
+          res.status(200).send(data);
+        }
+      } else {
+        // User is not logged in
+        res.status(500).send("You are not logged in!");
+      }
   };

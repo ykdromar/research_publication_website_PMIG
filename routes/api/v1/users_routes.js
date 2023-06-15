@@ -9,4 +9,7 @@ router.post('/send-otp', usersApisController.sendOTP);
 // Verify OTP route
 router.post('/verify-otp', usersApisController.verifyOTP);
 
+//Fetching user information
+router.get('/fetch', usersApisController.fatchUser);
+
 module.exports = router;
