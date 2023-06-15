@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-module.exports = {
-  PORT: 8000
-=======
+
 require("dotenv").config();
 module.exports = {
   PORT: 8000,
@@ -15,6 +12,5 @@ module.exports = {
     },
   },
   DB: "PMIG-Dev",
->>>>>>> 9902b88df4f8a10aeb0a618525ce3064502339b9
   // Add more variables as needed
 };

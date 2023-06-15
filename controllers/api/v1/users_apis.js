@@ -47,3 +47,5 @@ exports.verifyOTP = async (req, res) => {
       res.status(500).send("Failed to verify OTP.");
     }
   };
+
+
