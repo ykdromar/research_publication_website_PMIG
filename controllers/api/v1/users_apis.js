@@ -49,6 +49,45 @@ exports.verifyOTP = async (req, res) => {
     }
   };
 
+  exports.editProfile=async(req,res)=>{
+    try {
+      //ensure that the user in logged in(authentication check)
+      if(!req.User){
+        return res.status(401).json({
+          success: false,
+          message:'Unauthorized.Please Log in.'
+        });
+      }
+      //extract the updated user info from the request body
+      const {name,about,password}=req.body;
+      //update the user info in the database
+      const updatedUser = await User.update(
+      { name, about, password },
+      { where: { id: req.user.id } }
+      );
+      //timeout 
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Prepare the JSON respone
+      const response = {
+        data: {
+          name,
+          about
+        },
+        success: true,
+        statusCode: 200,
+        message: 'User information updated successfully'
+      };
+      res.json(response);
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).json({
+        success: false,
+        message: 'An Error occurred while editting user info'
+      });
+    }
+  };
+
+
   exports.fatchUser = async (req, res) => {
     const { userid } = req.body;
       if (req.isAuthenticated()) {
@@ -71,3 +110,4 @@ exports.verifyOTP = async (req, res) => {
         res.status(500).send("You are not logged in!");
       }
   };
+
