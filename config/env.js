@@ -11,5 +11,6 @@ module.exports = {
     },
   },
   DB: "PMIG-Dev",
+  JWT_SECRET: process.env.JWT_SECRET,
   // Add more variables as needed
 };

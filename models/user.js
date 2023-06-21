@@ -40,11 +40,11 @@ const userSchema = new Schema({
   // }
 });
 
-UserSchema.methods.comparePassword = async function (canditatePassword) {
+userSchema.methods.comparePassword = async function (canditatePassword) {
   const isMatch = await bcrypt.compare(canditatePassword, this.password);
   return isMatch;
-}
+};
 
-const User = mongoose.model("User", userSchema, "Users");
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
