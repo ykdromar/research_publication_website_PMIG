@@ -276,3 +276,39 @@ module.exports.fetchUser = async (req, res) => {
     });
   }
 };
+const Papers = require("../../../models/papers");
+
+module.exports.getAllPapers = async (req, res) => {
+  try {
+    const title = req.body.title;
+    if (!title) {
+      const fpapers = await Papers.find({});
+    } else {
+      const fpapers = await Papers.find({ title: title });
+    }
+    if (! fpapers) {
+      return res.status(200).json({
+        statusCode: 404,
+        message: "Papers not found",
+        data: {},
+        success: false,
+      });
+    } else {
+      return res.status(200).json({
+        statusCode: 200,
+        message: "Fetched all papers successfully",
+        data: {
+          papers,
+        },
+        success: true,
+      });
+    }
+  } catch (error) {
+    return res.status(200).json({
+      statusCode: 500,
+      message: "Internal Server Error",
+      data: {},
+      success: false,
+    });
+  }
+};
