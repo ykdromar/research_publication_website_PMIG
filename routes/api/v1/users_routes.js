@@ -3,6 +3,10 @@ const express = require("express");
 const router = express.Router();
 const usersApisController = require("../../../controllers/api/v1/users_apis");
 const passport = require("passport");
+const multer = require('multer');
+
+// Assuming we have a directory named 'uploads' to store the files
+const upload = multer({ dest: 'uploads/' }); 
 
 // Send OTP route
 router.post("/send-otp", usersApisController.createUser);
@@ -28,6 +32,13 @@ router.get(
   "/:userId",
   passport.authenticate("jwt", { session: false }),
   usersApisController.fetchUser
+);
+
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  upload.single('paper'),
+  usersApisController.createPublication
 );
 
 module.exports = router;
