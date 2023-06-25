@@ -29,5 +29,11 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   usersApisController.fetchUser
 );
+// edit paper title and descriptiongit
+router.put(
+  "/editPaper",
+  passport.authenticate("jwt", { session: false }),
+  usersApisController.editPaper
 
+);
 module.exports = router;

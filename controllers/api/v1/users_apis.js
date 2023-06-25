@@ -276,3 +276,50 @@ module.exports.fetchUser = async (req, res) => {
     });
   }
 };
+module.exports.editPaper = async (req, res) => {
+  try {
+      const { title, description } = req.body;
+      let userId = req.user._id;
+      let publicationId = req.paper._id;
+      let publication = await Publication.findOne({ _id: id, user: userId })
+      if (!publication) {
+          return res.status(200).json({
+              statusCode: 404,
+              message: "Paper not found",
+              data: {},
+              success: false,
+          });
+      } else {
+          if (title) {
+              publication.title = title;
+          }
+          if (description) {
+              publication.description = description;
+          }
+          publication.save();
+          return res.status(200).json({
+              statusCode: 200,
+              message: "Paper info updated successfully.",
+              data: {
+                  publication: {
+                      title:publication.title,
+                      description:publication.description,
+                  
+                  },
+              },
+              success: true,
+          });
+      }
+
+
+  } catch (error) {
+      return res.status(200).json({
+          statusCode: 500,
+          message: "Internal Server Error",
+          data: {},
+          success: false,
+      });
+  }
+}
+
+
