@@ -35,9 +35,12 @@ const userSchema = new Schema({
     required: false,
     unique: false,
   },
-  // publications: {
-  //     type:Array
-  // }
+  publications: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Publication"
+    }
+  ],
 });
 
 userSchema.methods.comparePassword = async function (canditatePassword) {
