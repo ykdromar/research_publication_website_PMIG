@@ -2,6 +2,8 @@ const User = require("../../../models/user");
 const { sendOTP } = require("../../../config/nodemailerConfig");
 const jwt = require("jsonwebtoken");
 const env = require("../../../config/env");
+const Publication = require('../../../models/publication');
+
 module.exports.createUser = async (req, res) => {
   try {
     const { username } = req.body;
@@ -276,6 +278,7 @@ module.exports.fetchUser = async (req, res) => {
     });
   }
 };
+
 module.exports.editPaper = async (req, res) => {
   try {
       const { title, description } = req.body;
@@ -322,4 +325,31 @@ module.exports.editPaper = async (req, res) => {
   }
 }
 
+
+
+exports.createPublication = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    const { userId } = req.user;
+
+    const publication = new Publication({
+      title,
+      paper: req.file.path,
+      description,
+      user: userId,
+    });
+
+    const savedPublication = await publication.save();
+
+    // Update user's publications array
+    await User.findByIdAndUpdate(userId, {
+      $push: { publications: savedPublication._id },
+    });
+
+    res.status(201).json(savedPublication);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
