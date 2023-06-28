@@ -2,7 +2,6 @@ const User = require("../../../models/user");
 const { sendOTP } = require("../../../config/nodemailerConfig");
 const jwt = require("jsonwebtoken");
 const env = require("../../../config/env");
-const Publication = require('../../../models/publication');
 
 module.exports.createUser = async (req, res) => {
   try {
@@ -247,7 +246,7 @@ module.exports.editProfile = async (req, res) => {
 
 module.exports.fetchUser = async (req, res) => {
   try {
-    let user = await User.findById(req.params.userId);
+    let user = await User.findById(req.params.userId).populate("publications");
     if (!user) {
       return res.status(200).json({
         statusCode: 404,
@@ -264,6 +263,7 @@ module.exports.fetchUser = async (req, res) => {
             username: user.username,
             name: user.name,
             about: user.about,
+            publications: user.publications,
           },
         },
         success: true,
@@ -278,117 +278,3 @@ module.exports.fetchUser = async (req, res) => {
     });
   }
 };
-
-const Papers = require("../../../models/papers");
-
-module.exports.getAllPapers = async (req, res) => {
-  try {
-    const title = req.body.title;
-    if (!title) {
-      const fpapers = await Papers.find({});
-    } else {
-      const fpapers = await Papers.find({ title: title });
-    }
-    if (! fpapers) {
-      return res.status(200).json({
-        statusCode: 404,
-        message: "Papers not found",
-        data: {},
-        success: false,
-      });
-    } else {
-      return res.status(200).json({
-        statusCode: 200,
-        message: "Fetched all papers successfully",
-        data: {
-          papers,
-        },
-        success: true,
-      });
-    }
-  } catch (error) {
-    return res.status(200).json({
-      statusCode: 500,
-      message: "Internal Server Error",
-      data: {},
-      success: false,
-    });
-  }
-};
-
-
-module.exports.editPaper = async (req, res) => {
-  try {
-      const { title, description } = req.body;
-      let userId = req.user._id;
-      let publicationId = req.paper._id;
-      let publication = await Publication.findOne({ _id: id, user: userId })
-      if (!publication) {
-          return res.status(200).json({
-              statusCode: 404,
-              message: "Paper not found",
-              data: {},
-              success: false,
-          });
-      } else {
-          if (title) {
-              publication.title = title;
-          }
-          if (description) {
-              publication.description = description;
-          }
-          publication.save();
-          return res.status(200).json({
-              statusCode: 200,
-              message: "Paper info updated successfully.",
-              data: {
-                  publication: {
-                      title:publication.title,
-                      description:publication.description,
-                  
-                  },
-              },
-              success: true,
-          });
-      }
-
-
-  } catch (error) {
-      return res.status(200).json({
-          statusCode: 500,
-          message: "Internal Server Error",
-          data: {},
-          success: false,
-      });
-  }
-}
-
-
-
-exports.createPublication = async (req, res) => {
-  try {
-    const { title, description } = req.body;
-    const { userId } = req.user;
-
-    const publication = new Publication({
-      title,
-      paper: req.file.path,
-      description,
-      user: userId,
-    });
-
-    const savedPublication = await publication.save();
-
-    // Update user's publications array
-    await User.findByIdAndUpdate(userId, {
-      $push: { publications: savedPublication._id },
-    });
-
-    res.status(201).json(savedPublication);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
-

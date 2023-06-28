@@ -1,11 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const publicationSchema = new mongoose.Schema({
   title: { type: String, required: true },
   paper: { type: String, required: true },
   description: { type: String, required: true },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  citations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Publication' }],
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  citations: [{ type: mongoose.Schema.Types.ObjectId, ref: "Citation" }],
 });
 
-module.exports = mongoose.model('Publication', publicationSchema);
+const Publication = mongoose.model("Publication", publicationSchema);
+module.exports = Publication;
