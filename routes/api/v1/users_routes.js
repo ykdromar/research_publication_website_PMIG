@@ -33,6 +33,14 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   usersApisController.fetchUser
 );
+// edit paper title and descriptiongit
+router.put(
+  "/editPaper",
+  passport.authenticate("jwt", { session: false }),
+  usersApisController.editPaper
+
+
+);
 
 router.post(
   '/',
@@ -40,5 +48,6 @@ router.post(
   upload.single('paper'),
   usersApisController.createPublication
 );
+
 
 module.exports = router;
