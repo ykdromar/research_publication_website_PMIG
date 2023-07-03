@@ -14,11 +14,7 @@ router.post(
   publicationApisController.createPublication
 );
 
-router.get(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  publicationApisController.getAllPublications
-);
+router.get("/", publicationApisController.getAllPublications);
 
 router.get(
   "/:publicationId",
