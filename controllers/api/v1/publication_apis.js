@@ -35,6 +35,7 @@ module.exports.createPublication = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res.status(200).json({
       statusCode: 500,
       message: "Internal Server Error",

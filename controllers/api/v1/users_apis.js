@@ -137,6 +137,7 @@ module.exports.signup = async (req, res) => {
           message: "Signed up successfully",
           data: {
             user: {
+              id: user._id,
               username,
               name,
               about,
@@ -180,6 +181,7 @@ module.exports.login = async (req, res) => {
         message: "Logged in successfully",
         data: {
           user: {
+            id: user._id,
             name: user.name,
             username: user.username,
             about: user.about,
@@ -226,6 +228,7 @@ module.exports.editProfile = async (req, res) => {
         message: "User Info updated successfully",
         data: {
           user: {
+            id: user._id,
             username: user.username,
             name: user.name,
             about: user.about,
@@ -260,6 +263,7 @@ module.exports.fetchUser = async (req, res) => {
         message: "Fetched User info successfully",
         data: {
           user: {
+            id: user._id,
             username: user.username,
             name: user.name,
             about: user.about,
